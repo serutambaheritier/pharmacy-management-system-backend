@@ -1,8 +1,8 @@
 # Pharmacy Management System
 
 **Project:** Pharmacy Management System Midterm  
-**Student name(s):** Replace with your name(s)  
-**Student ID(s):** Replace with your student ID(s)
+**Student name(s):** Serutamba Heritier  
+**Student ID(s):** 27141
 
 ## Requirements
 
