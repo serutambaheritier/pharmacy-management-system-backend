@@ -34,6 +34,11 @@ public class CounterController {
 		return counterService.findAll();
 	}
 
+	@GetMapping("/free")
+	public List<Counter> findFreeCounters() {
+		return counterService.findFreeCounters();
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable UUID id) {
 		var counter = counterService.findById(id);

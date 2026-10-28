@@ -24,6 +24,10 @@ public class PharmacistService {
 		return pharmacistRepository.findAll();
 	}
 
+	public List<Pharmacist> findByDrugClassName(String name) {
+		return pharmacistRepository.findByDrugClassNameIgnoreCase(name);
+	}
+
 	public Optional<Pharmacist> findById(UUID id) {
 		return pharmacistRepository.findById(id);
 	}

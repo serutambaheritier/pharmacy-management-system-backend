@@ -24,6 +24,10 @@ public class DrugClassService {
 		return drugClassRepository.findAll();
 	}
 
+	public List<DrugClass> findUnusedDrugClasses() {
+		return drugClassRepository.findUnusedDrugClasses();
+	}
+
 	public Optional<DrugClass> findById(UUID id) {
 		return drugClassRepository.findById(id);
 	}

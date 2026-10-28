@@ -1,7 +1,9 @@
 package com.auca.pharmacymanagementsystem.service;
 
 import com.auca.pharmacymanagementsystem.entity.DrugOrder;
+import com.auca.pharmacymanagementsystem.entity.OrderStatus;
 import com.auca.pharmacymanagementsystem.repository.DrugOrderRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +28,14 @@ public class DrugOrderService {
 
 	public Optional<DrugOrder> findById(UUID id) {
 		return drugOrderRepository.findById(id);
+	}
+
+	public List<DrugOrder> findByStatus(OrderStatus status) {
+		return drugOrderRepository.findByStatusOrderByOrderDateAsc(status);
+	}
+
+	public List<DrugOrder> findByDateRange(LocalDate start, LocalDate end) {
+		return drugOrderRepository.findByOrderDateBetweenOrderByOrderDateAsc(start, end);
 	}
 
 	public String update(UUID id, DrugOrder updatedDrugOrder) {

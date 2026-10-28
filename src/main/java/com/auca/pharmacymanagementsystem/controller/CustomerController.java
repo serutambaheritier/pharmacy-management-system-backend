@@ -2,6 +2,7 @@ package com.auca.pharmacymanagementsystem.controller;
 
 import com.auca.pharmacymanagementsystem.entity.Customer;
 import com.auca.pharmacymanagementsystem.service.CustomerService;
+import com.auca.pharmacymanagementsystem.service.PharmacistService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
 	private final CustomerService customerService;
+	private final PharmacistService pharmacistService;
 
-	public CustomerController(CustomerService customerService) {
+	public CustomerController(CustomerService customerService, PharmacistService pharmacistService) {
 		this.customerService = customerService;
+		this.pharmacistService = pharmacistService;
 	}
 
 	@PostMapping("/save")
@@ -32,6 +36,19 @@ public class CustomerController {
 	@GetMapping("/all")
 	public List<Customer> findAll() {
 		return customerService.findAll();
+	}
+
+	@GetMapping("/by-last-name")
+	public List<Customer> findByLastName(@RequestParam String lastName) {
+		return customerService.findByLastName(lastName);
+	}
+
+	@GetMapping("/of-pharmacist/{pharmacistId}")
+	public ResponseEntity<?> findByPharmacistId(@PathVariable UUID pharmacistId) {
+		if (pharmacistService.findById(pharmacistId).isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The pharmacist with that id does not exist");
+		}
+		return ResponseEntity.ok(customerService.findByPharmacistId(pharmacistId));
 	}
 
 	@GetMapping("/{id}")

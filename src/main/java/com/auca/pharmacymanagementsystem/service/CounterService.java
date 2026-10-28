@@ -24,6 +24,10 @@ public class CounterService {
 		return counterRepository.findAll();
 	}
 
+	public List<Counter> findFreeCounters() {
+		return counterRepository.findFreeCounters();
+	}
+
 	public Optional<Counter> findById(UUID id) {
 		return counterRepository.findById(id);
 	}

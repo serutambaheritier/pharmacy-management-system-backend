@@ -1,9 +1,12 @@
 package com.auca.pharmacymanagementsystem.controller;
 
 import com.auca.pharmacymanagementsystem.entity.DrugOrder;
+import com.auca.pharmacymanagementsystem.entity.OrderStatus;
 import com.auca.pharmacymanagementsystem.service.DrugOrderService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +36,18 @@ public class DrugOrderController {
 	@GetMapping("/all")
 	public List<DrugOrder> findAll() {
 		return drugOrderService.findAll();
+	}
+
+	@GetMapping("/by-status")
+	public List<DrugOrder> findByStatus(@RequestParam OrderStatus status) {
+		return drugOrderService.findByStatus(status);
+	}
+
+	@GetMapping("/between")
+	public List<DrugOrder> findByDateRange(
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+		return drugOrderService.findByDateRange(start, end);
 	}
 
 	@GetMapping("/{id}")

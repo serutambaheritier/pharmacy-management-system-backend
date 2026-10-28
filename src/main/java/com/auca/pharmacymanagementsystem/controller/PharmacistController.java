@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +33,11 @@ public class PharmacistController {
 	@GetMapping("/all")
 	public List<Pharmacist> findAll() {
 		return pharmacistService.findAll();
+	}
+
+	@GetMapping("/by-drug-class")
+	public List<Pharmacist> findByDrugClassName(@RequestParam String name) {
+		return pharmacistService.findByDrugClassName(name);
 	}
 
 	@GetMapping("/{id}")

@@ -4,5 +4,171 @@
     "description": "API requests for the Pharmacy Management System project.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "item": []
+  "item": [
+    {
+      "name": "Find customers by last name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/customers/by-last-name?lastName=serutamba",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "customers",
+            "by-last-name"
+          ],
+          "query": [
+            {
+              "key": "lastName",
+              "value": "serutamba"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find drug orders by status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/drug-orders/by-status?status=PLACED",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "drug-orders",
+            "by-status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "PLACED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find drug orders between dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/drug-orders/between?start=2026-10-01&end=2026-10-31",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "drug-orders",
+            "between"
+          ],
+          "query": [
+            {
+              "key": "start",
+              "value": "2026-10-01"
+            },
+            {
+              "key": "end",
+              "value": "2026-10-31"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find pharmacists by drug class",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/pharmacists/by-drug-class?name=antibiotics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "pharmacists",
+            "by-drug-class"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "antibiotics"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find free counters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/counters/free",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "counters",
+            "free"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find unused drug classes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/drug-classes/unused",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "drug-classes",
+            "unused"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find customers of pharmacist",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/customers/of-pharmacist/{{pharmacistId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "customers",
+            "of-pharmacist",
+            "{{pharmacistId}}"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "pharmacistId",
+      "value": "replace-with-a-pharmacist-uuid"
+    }
+  ]
 }

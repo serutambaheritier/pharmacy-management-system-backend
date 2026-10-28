@@ -34,6 +34,11 @@ public class DrugClassController {
 		return drugClassService.findAll();
 	}
 
+	@GetMapping("/unused")
+	public List<DrugClass> findUnusedDrugClasses() {
+		return drugClassService.findUnusedDrugClasses();
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable UUID id) {
 		var drugClass = drugClassService.findById(id);

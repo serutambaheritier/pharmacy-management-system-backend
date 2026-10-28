@@ -28,6 +28,14 @@ public class CustomerService {
 		return customerRepository.findById(id);
 	}
 
+	public List<Customer> findByLastName(String lastName) {
+		return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+	}
+
+	public List<Customer> findByPharmacistId(UUID pharmacistId) {
+		return customerRepository.findDistinctByDrugOrderPharmacistId(pharmacistId);
+	}
+
 	public String update(UUID id, Customer updatedCustomer) {
 		return customerRepository.findById(id).map(customer -> {
 			customer.setFirstName(updatedCustomer.getFirstName());
