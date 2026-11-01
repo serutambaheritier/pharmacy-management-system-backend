@@ -1,0 +1,1073 @@
+{
+  "info": {
+    "name": "Pharmacy Management System Midterm",
+    "description": "Postman requests for the Pharmacy Management System midterm. Requirements are grouped by Part and requests are named by requirement ID. Run A2 to create a drug order, then use GET list requests to copy generated IDs into collection variables. Change orderDate to today or a future date before creating orders.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pharmacy Management System Tests",
+      "description": "Requirement tests and CRUD requests. Update collection variables with IDs from your database before sending requests that use them.",
+      "item": [
+        {
+          "name": "Part A - Core operations",
+          "description": "A2: create a drug order. CRUD requests for other entities are in the CRUD folder.",
+          "item": [
+            {
+              "name": "A2 - Save drug order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderDate\": \"{{orderDate}}\",\n  \"status\": \"PLACED\",\n  \"prescriptionRef\": \"TEST-ORDER-001\",\n  \"totalAmount\": 25.00,\n  \"customer\": { \"id\": \"{{customerId}}\" },\n  \"pharmacist\": { \"id\": \"{{pharmacistId}}\" }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/save",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "save"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Part B - Derived queries",
+          "description": "B1-B3 derived repository query tests.",
+          "item": [
+            {
+              "name": "B1 - Find customers by last name",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/customers/by-last-name?lastName=serutamba",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "customers",
+                    "by-last-name"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastName",
+                      "value": "serutamba"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "B2 - Find drug orders by status",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/by-status?status=PLACED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "by-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "PLACED"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "B3 - Find drug orders between dates",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/between?start=2026-10-01&end=2026-10-31",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "between"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "2026-10-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2026-10-31"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Part C - JPQL joins",
+          "description": "C1-C4 JPQL query tests.",
+          "item": [
+            {
+              "name": "C1 - Find pharmacists by drug class",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/pharmacists/by-drug-class?name=antibiotics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "pharmacists",
+                    "by-drug-class"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "antibiotics"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "C2 - Find free counters",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/counters/free",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "counters",
+                    "free"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "C3 - Find unused drug classes",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-classes/unused",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-classes",
+                    "unused"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "C4 - Find customers of pharmacist",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/customers/of-pharmacist/{{pharmacistId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "customers",
+                    "of-pharmacist",
+                    "{{pharmacistId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Part D - Business rules",
+          "description": "D1-D4 business-rule tests.",
+          "item": [
+            {
+              "name": "D1 - Safe save drug order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderDate\": \"{{orderDate}}\",\n  \"status\": \"DISPENSED\",\n  \"prescriptionRef\": \"TEST-D1-001\",\n  \"totalAmount\": 20.00,\n  \"pharmacist\": { \"id\": \"{{pharmacistId}}\" }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/save",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "save"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "D2 - Update drug order status",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/{{orderId}}/status?status=PREPARED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "{{orderId}}",
+                    "status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "PREPARED"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "D3 - Add drug class to pharmacist",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/pharmacists/{{pharmacistId}}/drug-classes/{{drugClassId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "pharmacists",
+                    "{{pharmacistId}}",
+                    "drug-classes",
+                    "{{drugClassId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "D4 - Move pharmacist to counter",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/pharmacists/{{pharmacistId}}/counter?counterNumber={{counterNumber}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "pharmacists",
+                    "{{pharmacistId}}",
+                    "counter"
+                  ],
+                  "query": [
+                    {
+                      "key": "counterNumber",
+                      "value": "{{counterNumber}}"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Part E - Dispensed items",
+          "description": "E1-E3 dispensed-item tests. E3 includes item deletion and order deletion protection.",
+          "item": [
+            {
+              "name": "E1 - Save dispensed item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drugName\": \"Amoxicillin 500mg\",\n  \"dosageInstructions\": \"One capsule three times a day for 5 days\",\n  \"quantity\": 15\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/dispensed-items/save?drugOrderId={{orderId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "dispensed-items",
+                    "save"
+                  ],
+                  "query": [
+                    {
+                      "key": "drugOrderId",
+                      "value": "{{orderId}}"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "E2 - Customer dispensed-item history",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/dispensed-items/customer/{{customerNumber}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "dispensed-items",
+                    "customer",
+                    "{{customerNumber}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "E3 - Delete dispensed item",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/dispensed-items/delete/{{dispensedItemId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "dispensed-items",
+                    "delete",
+                    "{{dispensedItemId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "E3 - Verify order deletion protection",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/delete/{{orderId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "delete",
+                    "{{orderId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Part F - Reports and bulk updates",
+          "description": "F1-F2 reporting and bulk update tests.",
+          "item": [
+            {
+              "name": "F1 - Drug-order counts by status",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/stats/by-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "stats",
+                    "by-status"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "F2 - Cancel pharmacist orders for a day",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/cancel-day?pharmacistId={{pharmacistId}}&date={{orderDate}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "cancel-day"
+                  ],
+                  "query": [
+                    {
+                      "key": "pharmacistId",
+                      "value": "{{pharmacistId}}"
+                    },
+                    {
+                      "key": "date",
+                      "value": "{{orderDate}}"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "CRUD operations",
+          "description": "Use the save request first, then copy returned IDs into the collection variables before get-by-id, update, and delete requests.",
+          "item": [
+            {
+              "name": "Customers",
+              "item": [
+                {
+                  "name": "Create customer",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Customer\",\n  \"customerNumber\": \"TEST-CUSTOMER-001\",\n  \"phone\": \"0780000000\",\n  \"insurance\": \"Test Insurance\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/customers/save",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "customers",
+                        "save"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "List customers",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/customers/all",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "customers",
+                        "all"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Get customer by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "customers",
+                        "{{customerId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Update customer",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Customer\",\n  \"customerNumber\": \"TEST-CUSTOMER-001\",\n  \"phone\": \"0780000001\",\n  \"insurance\": \"Updated Insurance\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/customers/update/{{customerId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "customers",
+                        "update",
+                        "{{customerId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Delete customer",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/customers/delete/{{customerId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "customers",
+                        "delete",
+                        "{{customerId}}"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Counters",
+              "item": [
+                {
+                  "name": "Create counter",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"counterNumber\": 99,\n  \"name\": \"Test Counter\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/counters/save",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "counters",
+                        "save"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "List counters",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/counters/all",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "counters",
+                        "all"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Get counter by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/counters/{{counterId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "counters",
+                        "{{counterId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Update counter",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"counterNumber\": 99,\n  \"name\": \"Updated Test Counter\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/counters/update/{{counterId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "counters",
+                        "update",
+                        "{{counterId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Delete counter",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/counters/delete/{{counterId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "counters",
+                        "delete",
+                        "{{counterId}}"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Drug classes",
+              "item": [
+                {
+                  "name": "Create drug class",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Test Drug Class\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-classes/save",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-classes",
+                        "save"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "List drug classes",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-classes/all",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-classes",
+                        "all"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Get drug class by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-classes/{{drugClassId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-classes",
+                        "{{drugClassId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Update drug class",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Updated Test Drug Class\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-classes/update/{{drugClassId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-classes",
+                        "update",
+                        "{{drugClassId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Delete drug class",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-classes/delete/{{drugClassId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-classes",
+                        "delete",
+                        "{{drugClassId}}"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Pharmacists",
+              "item": [
+                {
+                  "name": "Create pharmacist",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Pharmacist\",\n  \"licenseNumber\": \"TEST-LICENSE-001\",\n  \"counter\": { \"id\": \"{{counterId}}\" },\n  \"drugClasses\": [{ \"id\": \"{{drugClassId}}\" }]\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pharmacists/save",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pharmacists",
+                        "save"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "List pharmacists",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pharmacists/all",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pharmacists",
+                        "all"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Get pharmacist by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pharmacists/{{pharmacistId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pharmacists",
+                        "{{pharmacistId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Update pharmacist",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Pharmacist\",\n  \"licenseNumber\": \"TEST-LICENSE-001\",\n  \"counter\": { \"id\": \"{{counterId}}\" },\n  \"drugClasses\": [{ \"id\": \"{{drugClassId}}\" }]\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pharmacists/update/{{pharmacistId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pharmacists",
+                        "update",
+                        "{{pharmacistId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Delete pharmacist",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pharmacists/delete/{{pharmacistId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pharmacists",
+                        "delete",
+                        "{{pharmacistId}}"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Drug orders",
+              "item": [
+                {
+                  "name": "List drug orders",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-orders/all",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-orders",
+                        "all"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Get drug order by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-orders/{{orderId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-orders",
+                        "{{orderId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Update drug order",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"orderDate\": \"{{orderDate}}\",\n  \"status\": \"PLACED\",\n  \"prescriptionRef\": \"TEST-ORDER-001-UPDATED\",\n  \"totalAmount\": 30.00,\n  \"customer\": { \"id\": \"{{customerId}}\" },\n  \"pharmacist\": { \"id\": \"{{pharmacistId}}\" }\n}"
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-orders/update/{{orderId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-orders",
+                        "update",
+                        "{{orderId}}"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": "Delete drug order",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/drug-orders/delete/{{orderId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "drug-orders",
+                        "delete",
+                        "{{orderId}}"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "description": "Local Spring Boot server base URL."
+    },
+    {
+      "key": "pharmacistId",
+      "value": "REPLACE_WITH_REAL_PHARMACIST_UUID",
+      "description": "Copy an id from GET /api/pharmacists/all."
+    },
+    {
+      "key": "drugClassId",
+      "value": "REPLACE_WITH_REAL_DRUG_CLASS_UUID",
+      "description": "Copy an id from GET /api/drug-classes/all."
+    },
+    {
+      "key": "orderId",
+      "value": "REPLACE_WITH_REAL_DRUG_ORDER_UUID",
+      "description": "Copy an id from GET /api/drug-orders/all."
+    },
+    {
+      "key": "counterNumber",
+      "value": "4",
+      "description": "Use a counter number from GET /api/counters/free."
+    },
+    {
+      "key": "orderDate",
+      "value": "2026-10-30",
+      "description": "Use YYYY-MM-DD; choose today or a future date for order creation."
+    },
+    {
+      "key": "customerNumber",
+      "value": "REPLACE_WITH_CUSTOMER_NUMBER",
+      "description": "Copy customerNumber from GET /api/customers/all."
+    },
+    {
+      "key": "dispensedItemId",
+      "value": "REPLACE_WITH_DISPENSED_ITEM_UUID",
+      "description": "Copy an item id from the E2 response."
+    },
+    {
+      "key": "customerId",
+      "value": "REPLACE_WITH_REAL_CUSTOMER_UUID",
+      "description": "Copy an id from GET /api/customers/all."
+    },
+    {
+      "key": "counterId",
+      "value": "REPLACE_WITH_REAL_COUNTER_UUID",
+      "description": "Copy an id from GET /api/counters/all."
+    }
+  ]
+}
