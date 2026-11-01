@@ -45,17 +45,17 @@ public class CounterController {
 		if (counter.isPresent()) {
 			return ResponseEntity.ok(counter.get());
 		} else {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The counter with that id does not exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The counter with that id does not exist");
 		}
 	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Counter counter) {
-	String message = counterService.update(id, counter);
-	if (message.equals("The counter with that id does not exist")) {
-	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+		String message = counterService.update(id, counter);
+		if (message.equals("The counter with that id does not exist")) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
 		} else {
-		return ResponseEntity.ok(message);
+			return ResponseEntity.ok(message);
 		}
 	}
 

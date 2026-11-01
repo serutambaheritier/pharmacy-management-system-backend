@@ -35,7 +35,6 @@ public class DrugClassService {
 	public String update(UUID id, DrugClass updatedDrugClass) {
 		return drugClassRepository.findById(id).map(drugClass -> {
 			drugClass.setName(updatedDrugClass.getName());
-			drugClass.setPharmacists(updatedDrugClass.getPharmacists());
 			drugClassRepository.save(drugClass);
 			return "Drug class updated successfully";
 		}).orElse("The drug class with that id does not exist");

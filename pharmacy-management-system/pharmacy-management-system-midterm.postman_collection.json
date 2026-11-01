@@ -462,6 +462,62 @@
           ]
         },
         {
+          "name": "Bonus requirements",
+          "description": "The two optional dashboard and pagination endpoints.",
+          "item": [
+            {
+              "name": "Bonus - Dashboard summary (+5)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/dashboard/summary",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "dashboard",
+                    "summary"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Bonus - Drug orders page (+5)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/drug-orders/page?page=0&size=5&sort=orderDate,desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "drug-orders",
+                    "page"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "orderDate,desc"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
           "name": "CRUD operations",
           "description": "Use the save request first, then copy returned IDs into the collection variables before get-by-id, update, and delete requests.",
           "item": [
@@ -1046,7 +1102,7 @@
     },
     {
       "key": "orderDate",
-      "value": "2026-10-30",
+      "value": "2026-11-02",
       "description": "Use YYYY-MM-DD; choose today or a future date for order creation."
     },
     {
